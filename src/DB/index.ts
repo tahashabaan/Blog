@@ -1,42 +1,12 @@
-import sql from "mssql";
-import { sqlConfig } from "@/Interface/databaseInterface";
-import { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } from "@/Config";
+import mongoose from "mongoose";
 
-export default class ConnectDatabase {
-  // private static config: string = `Server=${DB_HOST},1433;Database=${DB_DATABASE};User Id=${null};Password=${null};Encrypt=true`;
-  private sqlConfig: sqlConfig;
-  constructor() {
-    this.sqlConfig = {
-      // user: DB_USER,
-      // password: DB_PASSWORD,
-      database: DB_DATABASE,
-      server: DB_HOST,
-      // port :3000,
-      
-      // pool: {
-      //   max: 10,
-      //   min: 0,
-      //   idleTimeoutMillis: 30000,
-      // },
-      options: {
-        encrypt: true, // for azure
-        trustServerCertificate: false, // change to true for local dev / self-signed certs
-      },
-      // port:55892
-      
-    };
-  }
+import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_USER, DB_URL } from "@/Config";
+// Connection configuration
 
-  async connectDatabase() {
-    try {
-       await sql.connect(this.sqlConfig);
-    } catch (err) {
-      if (err) return console.log("falid to connected with database", err);
-      else console.log("connected with database");
-    }
-  }
+const url = DB_URL;
+export const connectDb = async () => {
+  await mongoose.connect(url, {});
+  console.log("conneted with database");
+};
 
-  async closeDatebase() {
-    (await sql.connect(this.sqlConfig)).close();
-  }
-}
+

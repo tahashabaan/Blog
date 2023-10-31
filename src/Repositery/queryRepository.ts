@@ -1,33 +1,23 @@
-
 export default class queryRepository {
-    
-  constructor(private database ) {
-    this.database = database;
-  }
+  constructor(private database) {}
 
   // Retrieve a user by their ID
-  findById(id:number) {
-    return this.database.query(`SELECT * FROM users WHERE id = ?`, [id]);
+  findById(id: string) {
+    return this.database.findById(id);
   }
 
   // Add a new user
   create(user) {
-    return this.database.query(
-      `INSERT INTO users (username, email) VALUES (?, ?)`,
-      [user.username, user.email]
-    );
+    return this.database.create(user);
   }
 
   // Update an existing user
   update(user) {
-    return this.database.query(
-      `UPDATE users SET username = ?, email = ? WHERE id = ?`,
-      [user.username, user.email, user.id]
-    );
+    return this.database.findByIdAndUpdate(user.id, user);
   }
 
   // Delete a user
-  delete(id:number) {
-    return this.database.query(`DELETE FROM users WHERE id = ?`, [id]);
+  delete(id: string) {
+    return this.database.findByIdAndDelete(id);
   }
 }

@@ -3,7 +3,7 @@ import swaggerUiExpress  from 'swagger-ui-express';
 
 import { PORT } from "./Config";
 import { loggerDev } from "./Utils/logger";
-import ConnectDatabase from 'DB'
+import {connectDb} from 'DB'
 import swaggerSpec  from '../swager.json';
 
 
@@ -21,7 +21,7 @@ export default class App {
     this.connectDatabase()
   }
 
-  get getServer(): Application {
+   public getServer(): Application {
     return this.app;
   }
 
@@ -43,8 +43,9 @@ export default class App {
   }
 
   private connectDatabase(){
-    const pool = new ConnectDatabase();
-    pool.connectDatabase();
+    // const pool = new ConnectDatabase();
+    // pool.connectDatabase();
+    connectDb();
   }
   // listing app on port => 3000
   listen() {
